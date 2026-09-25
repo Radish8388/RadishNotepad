@@ -1,0 +1,43 @@
+﻿<Window x:Class="RadishNotepad.FindReplaceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RadishNotepad"
+        mc:Ignorable="d"
+        Title="Find and Replace"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        KeyDown="Window_KeyDown">
+    <StackPanel Margin="16">
+        <TextBlock Text="Find what:" Margin="0,0,0,6" />
+        <TextBox x:Name="FindTextBox" MinWidth="280" Margin="0,0,0,12" KeyDown="FindTextBox_KeyDown"/>
+
+        <TextBlock x:Name="ReplaceLabel" Text="Replace with:" Margin="0,0,0,6" Visibility="Collapsed" />
+        <TextBox x:Name="ReplaceTextBox" MinWidth="280" Margin="0,0,0,12" Visibility="Collapsed" />
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+            <CheckBox x:Name="MatchCaseCheckBox" Content="Match case" Margin="0,0,16,0" />
+            <CheckBox x:Name="WrapAroundCheckBox" Content="Wrap around" IsChecked="True" />
+        </StackPanel>
+
+        <CheckBox x:Name="ReplaceModeCheckBox" Content="Replace"
+                   Checked="ReplaceModeCheckBox_Changed" Unchecked="ReplaceModeCheckBox_Changed"
+                   Margin="0,0,0,12" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="FindNextButton" Content="Find Next" MinWidth="90" Margin="0,0,8,0"
+                    Click="FindNext_Click" />
+            <Button x:Name="FindPrevButton" Content="Find Previous" MinWidth="100" Margin="0,0,8,0"
+                    Click="FindPrevious_Click" />
+            <Button x:Name="ReplaceButton" Content="Replace" MinWidth="90" Margin="0,0,8,0"
+                    Visibility="Collapsed" Click="Replace_Click" />
+            <Button x:Name="ReplaceAllButton" Content="Replace All" MinWidth="90" Margin="0,0,8,0"
+                    Visibility="Collapsed" Click="ReplaceAll_Click" />
+            <Button Content="Close" Click="Close_Click" MinWidth="75" />
+        </StackPanel>
+        <TextBlock x:Name="StatusText" Margin="0,10,0,0" Foreground="Gray" />
+    </StackPanel>
+</Window>

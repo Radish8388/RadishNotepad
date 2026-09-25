@@ -1,0 +1,300 @@
+﻿<Window x:Class="RadishNotepad.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RadishNotepad"
+        mc:Ignorable="d"
+        Title="Radish Notepad"
+        Height="600" Width="800"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        KeyDown="Window_PreviewKeyDown">
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Menu Grid.Column="0" Background="AliceBlue" VerticalAlignment="Center">
+                <MenuItem Header="_File" >
+                    <MenuItem Header="_New Tab" InputGestureText="Ctrl+N" Click="New_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/new.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Open" InputGestureText="Ctrl+O" Click="Open_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/open.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="RecentFilesMenuItem" Header="_Recent Files"/>
+                    <MenuItem x:Name="SaveMenuItem" Header="_Save" InputGestureText="Ctrl+S" Click="Save_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/save.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Save _As" InputGestureText="Ctrl+Shift+S" Click="SaveAs_Click"/>
+                    <MenuItem Header="Save A_ll" InputGestureText="Ctrl+Alt+S" Click="SaveAll_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/saveall.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Print" InputGestureText="Ctrl+P" Click="Print_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/print.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Close Tab" InputGestureText="Ctrl+W" Click="Close_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/close.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="E_xit" InputGestureText="Alt+F4" Click="Exit_Click"/>
+                </MenuItem>
+
+                <MenuItem Header="_Edit" >
+                    <MenuItem x:Name="UndoMenuItem" Header="_Undo" InputGestureText="Ctrl+Z" Command="ApplicationCommands.Undo">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/undo.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="RedoMenuItem" Header="_Redo" InputGestureText="Ctrl+Y" Command="ApplicationCommands.Redo">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/redo.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem x:Name="CutMenuItem" Header="Cu_t" InputGestureText="Ctrl+X" Command="ApplicationCommands.Cut">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/cut.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Copy" InputGestureText="Ctrl+C" Command="ApplicationCommands.Copy">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/copy.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="PasteMenuItem" Header="_Paste" InputGestureText="Ctrl+V" Command="ApplicationCommands.Paste">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/paste.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="DeleteMenuItem" Header="De_lete" InputGestureText="Del" Click="Delete_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/delete.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Find" InputGestureText="Ctrl+F" Click="Find_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/find.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Find _Next" InputGestureText="F3" Click="FindNext_Click"/>
+                    <MenuItem Header="Find Pre_vious" InputGestureText="Shift+F3" Click="FindPrevious_Click"/>
+                    <MenuItem x:Name="ReplaceMenuItem" Header="_Replace" InputGestureText="Ctrl+H" Click="Replace_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/replace.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Go To" InputGestureText="Ctrl+G" Click="GoTo_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Select _All" InputGestureText="Ctrl+A" Command="ApplicationCommands.SelectAll">
+                        <MenuItem.Icon>
+                            <Image Source="/icons/selectall.png"  Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="ReadOnlyMenuItem" Header="Read _Only" Click="ReadOnly_Click" IsCheckable="True" IsChecked="False" InputGestureText="Ctrl+L"/>
+                </MenuItem>
+
+                <MenuItem Header="_View" >
+                    <MenuItem Header="Zoom _In" InputGestureText="Ctrl+Plus" Click="ZoomIn_Click"/>
+                    <MenuItem Header="Zoom _Out" InputGestureText="Ctrl+Minus" Click="ZoomOut_Click"/>
+                    <MenuItem Header="_Restore Default Zoom" InputGestureText="Ctrl+0" Click="ZoomDefault_Click"/>
+                    <MenuItem x:Name="StatusBarMenuItem" Header="_Status Bar" Click="StatusBar_Click" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem x:Name="WordWrapMenuItem" Header="_Word Wrap" Click="WordWrap_Click" IsCheckable="True" IsChecked="True"/>
+                </MenuItem>
+
+                <MenuItem x:Name="EncodingMenu" Header="_Encoding">
+                    <MenuItem Header="ANSI"          Tag="ansi"    Click="Encoding_Click" />
+                    <MenuItem Header="UTF-8"         Tag="utf8"    Click="Encoding_Click" />
+                    <MenuItem Header="UTF-8-BOM"     Tag="utf8bom" Click="Encoding_Click" />
+                    <MenuItem Header="UTF-16 BE BOM" Tag="utf16be" Click="Encoding_Click" />
+                    <MenuItem Header="UTF-16 LE BOM" Tag="utf16le" Click="Encoding_Click" />
+                    <Separator />
+                    <MenuItem Header="OEM 437 (US DOS)"           Tag="oem437"   Click="Encoding_Click" />
+                    <MenuItem Header="OEM 850 (W. European DOS)"  Tag="oem850"   Click="Encoding_Click" />
+                </MenuItem>
+
+            </Menu>
+        </Grid>
+        <ToolBarTray Grid.Row="1" Background="AliceBlue" VerticalAlignment="Center" IsLocked="True">
+            <ToolBar Background="AliceBlue" Grid.Row="1" Loaded="ToolBar_Loaded">
+                <Button Click="New_Click" ToolTip="New Tab">
+                    <Image Source="/icons/new.png" Height="20" Width="20"/>
+                </Button>
+                <Button Click="Open_Click" ToolTip="Open">
+                    <Image Source="/icons/open.png" Height="20" Width="20"/>
+                </Button>
+                <Button x:Name="SaveButton" Click="Save_Click" ToolTip="Save">
+                    <Image Source="/icons/save.png" Height="20" Width="20">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button Click="SaveAll_Click" ToolTip="Save All">
+                    <Image Source="/icons/saveall.png" Height="20" Width="20"/>
+                </Button>
+                <Separator />
+                <Button Click="Print_Click" ToolTip="Print">
+                    <Image Source="/icons/print.png" Height="20" Width="20"/>
+                </Button>
+                <Button Click="Close_Click" ToolTip="Close Tab">
+                    <Image Source="/icons/close.png" Height="20" Width="20"/>
+                </Button>
+                <Separator />
+                <Button x:Name="UndoButton" Command="ApplicationCommands.Undo" ToolTip="Undo">
+                    <Image Source="/icons/undo.png" Height="20" Width="20">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button x:Name="RedoButton" Command="ApplicationCommands.Redo" ToolTip="Redo">
+                    <Image Source="/icons/redo.png" Height="20" Width="20">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Separator />
+                <Button x:Name="CutButton" Command="ApplicationCommands.Cut" ToolTip="Cut">
+                    <Image Source="/icons/cut.png" Height="20" Width="20">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button Command="ApplicationCommands.Copy" ToolTip="Copy">
+                    <Image Source="/icons/copy.png" Height="20" Width="20">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button x:Name="PasteButton" Command="ApplicationCommands.Paste" ToolTip="Paste">
+                    <Image Source="/icons/paste.png" Height="20" Width="20">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button x:Name="DeleteButton" Click="Delete_Click" ToolTip="Delete">
+                    <Image Source="/icons/delete.png" Height="20" Width="20">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Separator />
+                <Button Click="Find_Click" ToolTip="Find">
+                    <Image Source="/icons/find.png" Height="20" Width="20"/>
+                </Button>
+                <Button x:Name="ReplaceButton" Click="Replace_Click" ToolTip="Replace">
+                    <Image Source="/icons/replace.png" Height="20" Width="20">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button Command="ApplicationCommands.SelectAll" ToolTip="Select All">
+                    <Image Source="/icons/selectall.png" Height="20" Width="20"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <StatusBar x:Name="myStatusBar" Grid.Row="3" Background="AliceBlue">
+            <StatusBarItem>
+                <TextBlock Width="150" Name="PositionText" Text="Ln 1, Col 1" Margin="5,0,10,0" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Width="150" Name="CharactersText" Text="0 characters" Margin="5,0,10,0" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Width="80" Name="PlainTextText" Text="Plain Text" Margin="5,0,10,0" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Width="50" Name="ZoomText" Text="100%" Margin="5,0,10,0" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Width="100" Name="EolText" Text="Windows (CRLF)" Margin="5,0,10,0" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Width="120" Name="EncodingText" Text="UTF-8" Margin="5,0,10,0" />
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" Grid.Row="2">
+            <TabItem Header="Tab 1">
+                <local:EditControl x:Name="EC"/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

@@ -1,0 +1,26 @@
+﻿<Window x:Class="RadishNotepad.EncodingPickerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RadishNotepad"
+        mc:Ignorable="d"
+        Title="Save As Options"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="16">
+        <TextBlock Text="Encoding:" Margin="0,0,0,6" />
+        <ComboBox x:Name="EncodingCombo" MinWidth="240" />
+
+        <TextBlock Text="Line endings:" Margin="0,10,0,6" />
+        <ComboBox x:Name="EolCombo" MinWidth="240" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="Save" IsDefault="True" MinWidth="75" Margin="0,0,8,0"
+                    Click="Ok_Click" />
+            <Button Content="Cancel" IsCancel="True" MinWidth="75" />
+        </StackPanel>
+    </StackPanel>
+</Window>

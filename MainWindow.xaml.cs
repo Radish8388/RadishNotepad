@@ -849,7 +849,7 @@ namespace RadishNotepad
             RefreshRecentFilesMenu();
         }
 
-        private void OpenFilePath(string path)
+        public void OpenFilePath(string path)
         {
             EditControl? current = tabControl.SelectedContent as EditControl;
 
@@ -887,6 +887,16 @@ namespace RadishNotepad
             _lastWrapAround = wrapAround;
         }
 
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            // Environment.GetCommandLineArgs() returns [0] = exe path, [1] = first argument
+            string[] args = Environment.GetCommandLineArgs();
 
+            if (args.Length > 1)
+            {
+                string fileToOpen = args[1];
+                OpenFilePath(fileToOpen);
+            }
+        }
     }
 }
